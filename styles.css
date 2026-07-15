@@ -116,7 +116,7 @@ h1, h2, h3, h4 { font-weight: 600; line-height: 1.14; letter-spacing: -0.01em; }
   background: transparent; backdrop-filter: none;
   border-bottom: 1px solid transparent; transition: background .35s ease, backdrop-filter .35s ease, border-color .35s ease;
 }
-.header.scrolled { background: rgba(6,8,16,0.92); backdrop-filter: blur(16px); border-bottom-color: var(--line); }
+.header.scrolled { background: rgba(6,8,16,0.5); backdrop-filter: blur(18px); border-bottom-color: var(--line); }
 .header .container { display: flex; align-items: center; justify-content: space-between; padding-block: 15px; }
 .brand { display: flex; align-items: center; gap: 13px; }
 .brand-logo { height: 70px; width: auto; }
@@ -274,9 +274,9 @@ h1, h2, h3, h4 { font-weight: 600; line-height: 1.14; letter-spacing: -0.01em; }
 .founder, .expert { position: relative; z-index: 2; overflow: hidden; }
 .founder { background: #071022; }
 .expert { background: #0a1024; }
-.founder-photo, .expert-photo { position: absolute; inset: 0; background-size: cover; background-repeat: no-repeat; }
-.founder-photo { background-image: url('assets/fundador.jpg?v=2'); background-position: center; left: auto; width: 70%; }
-.expert-photo { background-image: url('assets/secao-expert.jpg'); background-position: left center; right: auto; width: 48%; }
+.founder-photo, .expert-photo { position: absolute; inset: 0; background-size: contain; background-repeat: no-repeat; }
+.founder-photo { background-image: url('assets/fundador.jpg?v=2'); background-position: right center; }
+.expert-photo { background-image: url('assets/secao-expert.jpg'); background-position: left center; }
 .founder::after, .expert::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; }
 .founder::after { background: linear-gradient(90deg, rgba(6,8,16,0.97) 0%, rgba(6,8,16,0.86) 38%, rgba(6,8,16,0.35) 66%, rgba(6,8,16,0.05) 100%); }
 .expert::after { background: linear-gradient(270deg, rgba(6,8,16,0.97) 0%, rgba(6,8,16,0.84) 40%, rgba(6,8,16,0.3) 70%, rgba(6,8,16,0) 100%); }
@@ -454,7 +454,11 @@ html:not(.has-js) .pin-progress { display: none; }
   .hero-cta .btn { width: 100%; }
   .strip .container { gap: 22px 34px; }
   .sim-form, .sim-result, .map-info { padding: 32px 24px; }
-  .map-stage { min-height: 300px; }
+  /* Mapa mundi fica minusculo no celular: escondemos e usamos os botoes de mercado */
+  .map-stage { display: none; }
+  .map-info { border-top: none; }
+  .map-chips { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+  .map-chips button { padding: 14px 10px; text-align: center; font-size: 0.9rem; }
   .brand-logo { height: 54px; }
   .statement { padding: 84px 0; }
   .map-foot { flex-direction: column; align-items: flex-start; }
@@ -467,7 +471,7 @@ html:not(.has-js) .pin-progress { display: none; }
 }
 /* Tablet e mobile: foto como banner no topo, texto embaixo sobre fundo sólido — sem sobreposição */
 @media (max-width: 1024px) {
-  .founder-photo, .expert-photo { position: relative; inset: auto; width: auto; height: 340px; }
+  .founder-photo, .expert-photo { position: relative; inset: auto; width: auto; height: 340px; background-size: cover; }
   .founder-photo { background-position: 72% 20%; }
   .expert-photo { background-position: center 14%; }
   .founder-photo::after, .expert-photo::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 130px; }

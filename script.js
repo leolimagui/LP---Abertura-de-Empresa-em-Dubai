@@ -178,15 +178,23 @@
   var SVGNS = 'http://www.w3.org/2000/svg';
   var pendingRegion = null;
 
-  // Region chips (primary selector on mobile) — work even before the map SVG loads
+  // Region chips (primary selector on mobile) — atualizam o painel na hora, mesmo sem o mapa
+  function updateMarketInfo(key) {
+    var r = REGIONS[key]; if (!r) return;
+    var set = function (id, v) { var el = document.getElementById(id); if (el) el.textContent = v; };
+    set('mapTitle', r.name); set('mapText', r.text); set('mapS1', r.s1); set('mapS2', r.s2);
+    document.querySelectorAll('.map-chips button').forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-r') === key); });
+  }
   document.querySelectorAll('.map-chips button').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var key = btn.getAttribute('data-r');
       pendingRegion = key;
+      updateMarketInfo(key);
       if (window.__selectRegion) window.__selectRegion(key);
       else if (window.__loadMap) window.__loadMap();
     });
   });
+  updateMarketInfo('oriente');
 
   var mapStage = document.getElementById('mapStage');
   if (mapStage) {
