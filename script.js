@@ -155,85 +155,6 @@
     });
   }
 
-  /* ---------- Cultural sound synth (Web Audio) ---------- */
-  var AudioCtxClass = window.AudioContext || window.webkitAudioContext;
-  var actx = null, master = null;
-  var muted = false;
-  try { muted = localStorage.getItem('lma_muted') === '1'; } catch (e) {}
-  function ensureAudio() {
-    if (!AudioCtxClass) return null;
-    if (!actx) { actx = new AudioCtxClass(); master = actx.createGain(); master.gain.value = 0.9; master.connect(actx.destination); }
-    if (actx.state === 'suspended') actx.resume();
-    return actx;
-  }
-  function tone(freq, start, dur, type, gain, opts) {
-    opts = opts || {};
-    var t0 = actx.currentTime + start;
-    var osc = actx.createOscillator(), g = actx.createGain();
-    osc.type = type || 'sine';
-    osc.frequency.setValueAtTime(freq, t0);
-    if (opts.glide) osc.frequency.exponentialRampToValueAtTime(opts.glide, t0 + dur);
-    var out = g;
-    if (opts.lp) { var lp = actx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = opts.lp; g.connect(lp); out = lp; }
-    if (opts.vibrato) {
-      var lfo = actx.createOscillator(), lg = actx.createGain();
-      lfo.frequency.value = opts.vibrato; lg.gain.value = opts.vibratoDepth || 6;
-      lfo.connect(lg); lg.connect(osc.frequency); lfo.start(t0); lfo.stop(t0 + dur + 0.05);
-    }
-    g.gain.setValueAtTime(0.0001, t0);
-    g.gain.linearRampToValueAtTime(gain || 0.2, t0 + (opts.attack || 0.02));
-    g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
-    osc.connect(g); out.connect(master);
-    osc.start(t0); osc.stop(t0 + dur + 0.06);
-  }
-  function noiseHit(start, dur, gain, freq, q) {
-    var t0 = actx.currentTime + start;
-    var len = Math.max(1, Math.floor(actx.sampleRate * dur));
-    var buf = actx.createBuffer(1, len, actx.sampleRate), d = buf.getChannelData(0);
-    for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2);
-    var src = actx.createBufferSource(); src.buffer = buf;
-    var bp = actx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = freq || 200; bp.Q.value = q || 1.4;
-    var g = actx.createGain(); g.gain.value = gain || 0.3;
-    src.connect(bp); bp.connect(g); g.connect(master);
-    src.start(t0); src.stop(t0 + dur + 0.02);
-  }
-  function playRegion(key) {
-    if (muted || reduce) return;
-    if (!ensureAudio()) return;
-    switch (key) {
-      case 'oriente': // Hijaz scale — Middle Eastern
-        [[587.33,0],[622.25,0.16],[739.99,0.32],[783.99,0.46],[739.99,0.62],[622.25,0.78],[587.33,0.94]].forEach(function (n) {
-          tone(n[0], n[1], 0.42, 'sawtooth', 0.13, { lp: 2200, vibrato: 6, vibratoDepth: 8 });
-        });
-        break;
-      case 'asia': // Pentatonic — koto-like pluck
-        [[659.25,0],[783.99,0.16],[880,0.32],[1046.5,0.5],[880,0.7],[659.25,0.9]].forEach(function (n) {
-          tone(n[0], n[1], 0.5, 'triangle', 0.16, { attack: 0.005, lp: 3000 });
-        });
-        break;
-      case 'europa': // Major arpeggio — classical, elegant
-        [[523.25,0],[659.25,0.14],[783.99,0.28],[1046.5,0.44]].forEach(function (n) {
-          tone(n[0], n[1], 0.6, 'triangle', 0.16, { attack: 0.03 });
-        });
-        tone(1318.51, 0.6, 0.5, 'sine', 0.08, { attack: 0.05 });
-        break;
-      case 'africa': // Djembe-like percussion
-        [0,0.24,0.4,0.62,0.78,1.0].forEach(function (t, i) { noiseHit(t, 0.22, i % 3 === 0 ? 0.34 : 0.22, i % 3 === 0 ? 110 : 210, 1.2); });
-        noiseHit(0.5, 0.14, 0.2, 520, 2); noiseHit(0.9, 0.14, 0.2, 520, 2);
-        break;
-      case 'americas': // Warm syncopated motif (Latin/blues feel)
-        [[440,0],[523.25,0.18],[587.33,0.42],[659.25,0.6],[523.25,0.82],[440,1.0]].forEach(function (n) {
-          tone(n[0], n[1], 0.5, 'triangle', 0.15, { attack: 0.02, lp: 2600 });
-        });
-        tone(220, 0, 1.3, 'sine', 0.1, { attack: 0.04 });
-        break;
-      case 'oceania': // Didgeridoo drone
-        tone(72, 0, 2.6, 'sawtooth', 0.22, { lp: 380, vibrato: 5.5, vibratoDepth: 4, attack: 0.08 });
-        tone(108, 0, 2.6, 'sawtooth', 0.08, { lp: 500, vibrato: 5.5, vibratoDepth: 3, attack: 0.1 });
-        break;
-    }
-  }
-
   /* ---------- Interactive real world map ---------- */
   var REGIONS = {
     oriente: { name: 'Oriente Médio', anchor: 'sa', s1: '~400 mi', s2: '0%', text: 'Mercado consumidor de alto poder aquisitivo, na porta da sua empresa. Acordos regionais facilitam a entrada de produtos e serviços.', countries: ['ae','sa','qa','kw','om','bh','ir','iq','jo','il','lb','sy','ye'] },
@@ -334,21 +255,9 @@
       overlay.querySelectorAll('.map-marker').forEach(function (m) { m.classList.toggle('active', m.getAttribute('data-r') === key); });
       var set = function (id, v) { var el = document.getElementById(id); if (el) el.textContent = v; };
       set('mapTitle', r.name); set('mapText', r.text); set('mapS1', r.s1); set('mapS2', r.s2);
-      if (!silent) playRegion(key);
     }
     selectRegion('oriente', true);
     var loading = document.getElementById('mapLoading'); if (loading) loading.classList.add('hide');
-  }
-
-  // Sound mute toggle
-  var soundBtn = document.getElementById('mapSound');
-  if (soundBtn) {
-    function paintSound() { soundBtn.textContent = muted ? '🔇 Som' : '🔊 Som'; soundBtn.classList.toggle('muted', muted); }
-    paintSound();
-    soundBtn.addEventListener('click', function () {
-      muted = !muted; try { localStorage.setItem('lma_muted', muted ? '1' : '0'); } catch (e) {}
-      paintSound(); if (!muted) { ensureAudio(); }
-    });
   }
 
   /* ---------- Simulator ---------- */
