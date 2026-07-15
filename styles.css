@@ -461,7 +461,7 @@ html:not(.has-js) .pin-progress { display: none; }
   .map-info { border-top: none; }
   .map-chips { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
   .map-chips button { padding: 14px 10px; text-align: center; font-size: 0.9rem; }
-  .brand-logo { height: 36px; }
+  .brand-logo { height: 46px; }
   .statement { padding: 84px 0; }
   .map-foot { flex-direction: column; align-items: flex-start; }
   .final-card { padding: 48px 24px; }
