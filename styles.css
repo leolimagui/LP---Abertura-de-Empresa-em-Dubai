@@ -276,7 +276,7 @@ h1, h2, h3, h4 { font-weight: 600; line-height: 1.14; letter-spacing: -0.01em; }
 .expert { background: #0a1024; }
 .founder-photo, .expert-photo { position: absolute; inset: 0; background-size: cover; background-repeat: no-repeat; }
 .founder-photo { background-image: url('assets/fundador.jpg?v=2'); background-position: center; left: auto; width: 70%; }
-.expert-photo { background-image: url('assets/secao-expert.jpg'); background-position: left center; }
+.expert-photo { background-image: url('assets/secao-expert.jpg'); background-position: left center; right: auto; width: 48%; }
 .founder::after, .expert::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; }
 .founder::after { background: linear-gradient(90deg, rgba(6,8,16,0.97) 0%, rgba(6,8,16,0.86) 38%, rgba(6,8,16,0.35) 66%, rgba(6,8,16,0.05) 100%); }
 .expert::after { background: linear-gradient(270deg, rgba(6,8,16,0.97) 0%, rgba(6,8,16,0.84) 40%, rgba(6,8,16,0.3) 70%, rgba(6,8,16,0) 100%); }
