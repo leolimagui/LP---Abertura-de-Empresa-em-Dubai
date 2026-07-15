@@ -282,8 +282,16 @@ h1, h2, h3, h4 { font-weight: 600; line-height: 1.14; letter-spacing: -0.01em; }
 .founder-photo img { width: 100%; height: 100%; object-fit: contain; display: block; object-position: right center; }
 .expert-photo { width: 100%; height: 100%; object-fit: contain; display: block; object-position: left center; }
 .founder::after, .expert::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-.founder::after { background: linear-gradient(90deg, rgba(6,8,16,0.97) 0%, rgba(6,8,16,0.86) 38%, rgba(6,8,16,0.35) 66%, rgba(6,8,16,0.05) 100%); }
-.expert::after { background: linear-gradient(270deg, rgba(6,8,16,0.97) 0%, rgba(6,8,16,0.84) 40%, rgba(6,8,16,0.3) 70%, rgba(6,8,16,0) 100%); }
+.founder::after {
+  background:
+    linear-gradient(180deg, rgba(6,8,16,0.75) 0%, rgba(6,8,16,0) 160px),
+    linear-gradient(90deg, rgba(6,8,16,0.97) 0%, rgba(6,8,16,0.86) 38%, rgba(6,8,16,0.35) 66%, rgba(6,8,16,0.05) 100%);
+}
+.expert::after {
+  background:
+    linear-gradient(180deg, rgba(6,8,16,0.75) 0%, rgba(6,8,16,0) 160px),
+    linear-gradient(270deg, rgba(6,8,16,0.97) 0%, rgba(6,8,16,0.84) 40%, rgba(6,8,16,0.3) 70%, rgba(6,8,16,0) 100%);
+}
 .founder-copy, .expert-copy { position: relative; z-index: 2; max-width: 560px; }
 .expert-copy { max-width: 540px; }
 .founder-copy .title, .expert-copy .title { font-size: clamp(1.9rem, 4vw, 3rem); }
