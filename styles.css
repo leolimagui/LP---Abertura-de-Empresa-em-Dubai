@@ -270,21 +270,21 @@ h1, h2, h3, h4 { font-weight: 600; line-height: 1.14; letter-spacing: -0.01em; }
 .step h3 { font-size: 1.08rem; margin-bottom: 8px; font-weight: 600; }
 .step p { color: var(--soft); font-size: 0.9rem; font-weight: 300; }
 
-/* Founder / authority + Expert band — foto ao lado do texto, no mesmo flex (nunca sobrepõe,
-   nunca corta: object-fit:contain reduz a imagem inteira para caber no espaço disponível). */
-.founder, .expert { position: relative; z-index: 2; }
+/* Founder / authority + Expert band — DESKTOP: foto em tela cheia atrás do texto, com gradiente
+   escuro para legibilidade (visual original, restaurado a pedido do usuário). MOBILE (<=1024px,
+   ver media query abaixo) continua empilhado/sem sobreposição — isso não muda. */
+.founder, .expert { position: relative; z-index: 2; overflow: hidden; }
 .founder { background: #071022; }
 .expert { background: #0a1024; }
-.founder-inner, .expert-inner {
-  display: flex; align-items: center; justify-content: space-between; gap: 48px;
-  min-height: 600px; padding-block: 72px;
-}
-.founder-photo, .expert-photo {
-  flex: 0 0 42%; width: 42%; height: auto; max-height: 500px;
-  border-radius: 18px; display: block;
-}
-.founder-photo img, .expert-photo img { display: block; width: 100%; height: auto; border-radius: inherit; }
-.founder-copy, .expert-copy { flex: 1 1 0%; min-width: 280px; max-width: 560px; }
+.founder-inner { display: flex; align-items: center; min-height: 600px; padding-block: 72px; }
+.expert-inner { display: flex; align-items: center; justify-content: flex-end; min-height: 600px; padding-block: 72px; }
+.founder-photo, .expert-photo { position: absolute; inset: 0; z-index: 0; }
+.founder-photo img { width: 100%; height: 100%; object-fit: contain; display: block; object-position: right center; }
+.expert-photo { width: 100%; height: 100%; object-fit: contain; display: block; object-position: left center; }
+.founder::after, .expert::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.founder::after { background: linear-gradient(90deg, rgba(6,8,16,0.97) 0%, rgba(6,8,16,0.86) 38%, rgba(6,8,16,0.35) 66%, rgba(6,8,16,0.05) 100%); }
+.expert::after { background: linear-gradient(270deg, rgba(6,8,16,0.97) 0%, rgba(6,8,16,0.84) 40%, rgba(6,8,16,0.3) 70%, rgba(6,8,16,0) 100%); }
+.founder-copy, .expert-copy { position: relative; z-index: 2; max-width: 560px; }
 .expert-copy { max-width: 540px; }
 .founder-copy .title, .expert-copy .title { font-size: clamp(1.9rem, 4vw, 3rem); }
 .founder-name { margin-top: 26px; font-family: var(--serif); font-size: 1.35rem; color: var(--gold-bright); }
@@ -473,15 +473,11 @@ html:not(.has-js) .pin-progress { display: none; }
 }
 /* Tablet e mobile: foto como banner no topo (empilhado), texto embaixo — sem sobreposição */
 @media (max-width: 1024px) {
-  .founder-inner, .expert-inner { flex-direction: column; align-items: stretch; gap: 0; min-height: 0; padding-block: 0; }
-  .founder-photo, .expert-photo {
-    order: -1; flex-basis: auto; max-width: none; max-height: none;
-    width: calc(100% + 36px); margin-inline: -18px; height: 340px; border-radius: 0; overflow: hidden;
-  }
-  .founder-photo img, .expert-photo img { width: 100%; height: 100%; }
-  .founder-photo img { object-fit: cover; object-position: center 20%; }
-  .expert-photo { background: #0a1024; }
-  .expert-photo img { object-fit: contain; padding: 20px 0; box-sizing: border-box; }
+  .founder-photo, .expert-photo { display: block; position: static; width: 100%; height: 340px; overflow: hidden; }
+  .founder::after, .expert::after { display: none; }
+  .founder-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+  .expert-photo { background: #0a1024; object-fit: contain; padding: 20px 0; box-sizing: border-box; }
+  .founder-inner, .expert-inner { display: block; min-height: 0; padding-block: 0; }
   .founder-copy, .expert-copy { max-width: 100%; padding: 32px 0 56px; }
 }
 @media (max-width: 560px) {
