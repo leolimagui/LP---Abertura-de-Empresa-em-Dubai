@@ -176,6 +176,17 @@
   };
   var REGION_ORDER = ['oriente','europa','asia','africa','americas','oceania'];
   var SVGNS = 'http://www.w3.org/2000/svg';
+  var pendingRegion = null;
+
+  // Region chips (primary selector on mobile) — work even before the map SVG loads
+  document.querySelectorAll('.map-chips button').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var key = btn.getAttribute('data-r');
+      pendingRegion = key;
+      if (window.__selectRegion) window.__selectRegion(key);
+      else if (window.__loadMap) window.__loadMap();
+    });
+  });
 
   var mapStage = document.getElementById('mapStage');
   if (mapStage) {
@@ -263,10 +274,11 @@
       r.countries.forEach(function (c) { var el = svg.getElementById ? svg.getElementById(c) : svg.querySelector('#' + c); if (el) el.classList.add('rg-active'); });
       overlay.querySelectorAll('.ov-route').forEach(function (p) { p.classList.toggle('on', p.getAttribute('data-r') === key); });
       overlay.querySelectorAll('.map-marker').forEach(function (m) { m.classList.toggle('active', m.getAttribute('data-r') === key); });
+      document.querySelectorAll('.map-chips button').forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-r') === key); });
       var set = function (id, v) { var el = document.getElementById(id); if (el) el.textContent = v; };
       set('mapTitle', r.name); set('mapText', r.text); set('mapS1', r.s1); set('mapS2', r.s2);
     }
-    selectRegion('oriente', true);
+    selectRegion(pendingRegion || 'oriente', true);
     var loading = document.getElementById('mapLoading'); if (loading) loading.classList.add('hide');
   }
 

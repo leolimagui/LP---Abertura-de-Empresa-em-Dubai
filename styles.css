@@ -209,6 +209,10 @@ h1, h2, h3, h4 { font-weight: 600; line-height: 1.14; letter-spacing: -0.01em; }
 .map-loading.hide { opacity: 0; visibility: hidden; transition: opacity .4s; }
 .map-info { padding: 40px 38px; border-left: 1px solid var(--line); display: flex; flex-direction: column; }
 .map-info .eyebrow { margin-bottom: 12px; }
+.map-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.map-chips button { background: rgba(255,255,255,0.04); border: 1px solid var(--line); color: var(--soft); padding: 8px 14px; border-radius: 999px; font-family: var(--sans); font-size: 0.82rem; cursor: pointer; transition: all .2s; -webkit-tap-highlight-color: transparent; }
+.map-chips button:hover { border-color: var(--gold); color: var(--text); }
+.map-chips button.active { background: rgba(201,161,94,0.14); border-color: var(--gold); color: var(--gold-bright); }
 .map-info h3 { font-family: var(--serif); font-weight: 500; font-size: 1.9rem; margin-bottom: 8px; transition: opacity .25s; }
 .map-info p { color: var(--soft); font-weight: 300; font-size: 0.96rem; margin-bottom: 22px; }
 .map-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 26px; }
@@ -266,36 +270,21 @@ h1, h2, h3, h4 { font-weight: 600; line-height: 1.14; letter-spacing: -0.01em; }
 .step h3 { font-size: 1.08rem; margin-bottom: 8px; font-weight: 600; }
 .step p { color: var(--soft); font-size: 0.9rem; font-weight: 300; }
 
-/* Founder / authority */
-.founder { position: relative; z-index: 2; }
-.founder-media {
-  position: relative;
-  min-height: 600px;
-  display: flex; align-items: center;
-  background: #071022 url('assets/fundador.jpg?v=2') no-repeat;
-  background-size: cover; background-position: right center;
-}
-
-/* Expert / global presence band (image left, text right) */
-.expert { position: relative; z-index: 2; }
-.expert-media {
-  position: relative; min-height: 600px; display: flex; align-items: center;
-  background: #0a1024 url('assets/secao-expert.jpg') no-repeat;
-  background-size: cover; background-position: left center;
-}
-.expert-media::before {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(270deg, rgba(6,8,16,0.97) 0%, rgba(6,8,16,0.84) 40%, rgba(6,8,16,0.3) 70%, rgba(6,8,16,0) 100%);
-}
-.expert .container { position: relative; z-index: 2; display: flex; justify-content: flex-end; }
+/* Founder / authority + Expert band — foto separada do texto (responsivo limpo) */
+.founder, .expert { position: relative; z-index: 2; overflow: hidden; }
+.founder { background: #071022; }
+.expert { background: #0a1024; }
+.founder-photo, .expert-photo { position: absolute; inset: 0; background-size: cover; background-repeat: no-repeat; }
+.founder-photo { background-image: url('assets/fundador.jpg?v=2'); background-position: right center; }
+.expert-photo { background-image: url('assets/secao-expert.jpg'); background-position: left center; }
+.founder::after, .expert::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.founder::after { background: linear-gradient(90deg, rgba(6,8,16,0.97) 0%, rgba(6,8,16,0.86) 38%, rgba(6,8,16,0.35) 66%, rgba(6,8,16,0.05) 100%); }
+.expert::after { background: linear-gradient(270deg, rgba(6,8,16,0.97) 0%, rgba(6,8,16,0.84) 40%, rgba(6,8,16,0.3) 70%, rgba(6,8,16,0) 100%); }
+.founder .container, .expert .container { position: relative; z-index: 2; display: flex; align-items: center; min-height: 600px; }
+.expert .container { justify-content: flex-end; }
+.founder-copy { max-width: 560px; padding: 72px 0; }
 .expert-copy { max-width: 540px; padding: 72px 0; }
-.expert-copy .title { font-size: clamp(1.9rem, 4vw, 3rem); }
-.founder-media::before {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(90deg, rgba(6,8,16,0.97) 0%, rgba(6,8,16,0.86) 38%, rgba(6,8,16,0.35) 66%, rgba(6,8,16,0.05) 100%);
-}
-.founder-copy { position: relative; z-index: 2; max-width: 560px; padding: 72px 0; }
-.founder-copy .title { font-size: clamp(1.9rem, 4vw, 3rem); }
+.founder-copy .title, .expert-copy .title { font-size: clamp(1.9rem, 4vw, 3rem); }
 .founder-name { margin-top: 26px; font-family: var(--serif); font-size: 1.35rem; color: var(--gold-bright); }
 .founder-name span { display: block; font-family: var(--sans); font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
 .founder-copy .btn { margin-top: 26px; }
@@ -472,28 +461,24 @@ html:not(.has-js) .pin-progress { display: none; }
   .final-card { padding: 48px 24px; }
   .footer-top { grid-template-columns: 1fr; }
   .footer-bottom { flex-direction: column; text-align: center; }
-  .wa-float .label { display: none; }
-  .wa-float a { padding: 15px; }
+  .wa-float { display: none; }
   .sticky-cta { display: block; }
   .header .btn .full { display: none; }
 }
-/* Tablet e mobile: empilhado (imagem no topo, texto embaixo sobre fundo sólido) — sem sobreposição */
+/* Tablet e mobile: foto como banner no topo, texto embaixo sobre fundo sólido — sem sobreposição */
 @media (max-width: 1024px) {
-  .founder-media, .expert-media {
-    min-height: 0; display: block;
-    background-size: cover;
-  }
-  .founder-media { background-position: 72% 22%; }
-  .expert-media { background-position: 50% 16%; }
-  .founder-media::before, .expert-media::before {
-    background: linear-gradient(180deg, rgba(6,8,16,0.15) 0%, rgba(6,8,16,0.45) 30%, rgba(6,8,16,0.99) 56%, #060810 100%);
-  }
-  .expert .container { display: block; }
-  .founder-copy, .expert-copy { max-width: 620px; margin-inline: auto; padding: 340px 0 64px; }
+  .founder-photo, .expert-photo { position: relative; inset: auto; height: 340px; }
+  .founder-photo { background-position: 72% 20%; }
+  .expert-photo { background-position: center 14%; }
+  .founder-photo::after, .expert-photo::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 130px; }
+  .founder-photo::after { background: linear-gradient(180deg, transparent, #071022); }
+  .expert-photo::after { background: linear-gradient(180deg, transparent, #0a1024); }
+  .founder::after, .expert::after { display: none; }
+  .founder .container, .expert .container { display: block; min-height: 0; }
+  .founder-copy, .expert-copy { max-width: 100%; padding: 40px 0 60px; }
 }
 @media (max-width: 560px) {
-  .founder-copy, .expert-copy { padding-top: 250px; }
-  .founder-media { background-position: 70% 18%; }
+  .founder-photo, .expert-photo { height: 290px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
