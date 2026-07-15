@@ -34,7 +34,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=8">
+<link rel="stylesheet" href="styles.css?v=9">
 
 <!-- Structured data -->
 <script type="application/ld+json">
@@ -98,7 +98,7 @@
 <section class="hero">
   <div class="hero-bg">
     <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="auto" aria-hidden="true" tabindex="-1"
-           data-mobile="assets/hero-bg-mobile.mp4?v=3">
+           data-mobile="assets/hero-bg-mobile.mp4?v=5">
       <source src="assets/hero-bg.mp4?v=3" type="video/mp4">
     </video>
   </div>
@@ -208,14 +208,16 @@
 
 <!-- Expert / global presence -->
 <section class="expert" aria-label="Presença global">
-  <div class="expert-photo" role="img" aria-label="Leandro Monteiro em diferentes mercados globais"></div>
   <div class="container">
-    <div class="expert-copy reveal">
-      <div class="hairline"></div>
-      <span class="eyebrow">Presença global</span>
-      <h2 class="title">Um pé em <span class="gold italic">cada mercado</span></h2>
-      <p class="lead">Do mundo árabe à Ásia, o Clube de Negócios LMA conecta empresários brasileiros aos principais mercados do planeta — com a cultura, os contatos e a estrutura certos para exportar e crescer.</p>
-      <a class="btn btn--gold js-wa" data-msg="Ola! Quero acesso aos mercados globais a partir de Dubai com o Clube de Negocios LMA." href="#">Quero acesso a esses mercados</a>
+    <div class="expert-inner">
+      <img class="expert-photo" src="assets/secao-expert.jpg?v=2" alt="Leandro Monteiro em diferentes mercados globais">
+      <div class="expert-copy reveal">
+        <div class="hairline"></div>
+        <span class="eyebrow">Presença global</span>
+        <h2 class="title">Um pé em <span class="gold italic">cada mercado</span></h2>
+        <p class="lead">Do mundo árabe à Ásia, o Clube de Negócios LMA conecta empresários brasileiros aos principais mercados do planeta — com a cultura, os contatos e a estrutura certos para exportar e crescer.</p>
+        <a class="btn btn--gold js-wa" data-msg="Ola! Quero acesso aos mercados globais a partir de Dubai com o Clube de Negocios LMA." href="#">Quero acesso a esses mercados</a>
+      </div>
     </div>
   </div>
 </section>
@@ -348,14 +350,19 @@
 
 <!-- Founder / authority -->
 <section class="founder" id="fundador" aria-label="Liderança">
-  <div class="founder-photo" role="img" aria-label="Leandro Monteiro, fundador do Clube de Negócios LMA"></div>
   <div class="container">
-    <div class="founder-copy reveal">
-      <span class="eyebrow">Quem conduz sua expansão</span>
-      <h2 class="title">Liderança que já <span class="gold italic">abriu o caminho</span></h2>
-      <p class="lead">À frente do Clube de Negócios LMA, <strong>Leandro Monteiro</strong> orienta empresários brasileiros a exportar e proteger seu patrimônio a partir de Dubai — unindo experiência internacional, rede de contatos e execução de ponta a ponta.</p>
-      <p class="founder-name">Leandro Monteiro<span>Fundador • Clube de Negócios LMA</span></p>
-      <a class="btn btn--gold js-wa" data-msg="Ola! Quero falar com a equipe do Leandro Monteiro sobre abrir minha empresa em Dubai." href="#">Falar com a nossa equipe</a>
+    <div class="founder-inner">
+      <div class="founder-copy reveal">
+        <span class="eyebrow">Quem conduz sua expansão</span>
+        <h2 class="title">Liderança que já <span class="gold italic">abriu o caminho</span></h2>
+        <p class="lead">À frente do Clube de Negócios LMA, <strong>Leandro Monteiro</strong> orienta empresários brasileiros a exportar e proteger seu patrimônio a partir de Dubai — unindo experiência internacional, rede de contatos e execução de ponta a ponta.</p>
+        <p class="founder-name">Leandro Monteiro<span>Fundador • Clube de Negócios LMA</span></p>
+        <a class="btn btn--gold js-wa" data-msg="Ola! Quero falar com a equipe do Leandro Monteiro sobre abrir minha empresa em Dubai." href="#">Falar com a nossa equipe</a>
+      </div>
+      <picture class="founder-photo">
+        <source media="(max-width: 1024px)" srcset="assets/fundador-mobile.jpg">
+        <img src="assets/fundador.jpg?v=2" alt="Leandro Monteiro, fundador do Clube de Negócios LMA">
+      </picture>
     </div>
   </div>
 </section>
@@ -526,6 +533,6 @@
   </div>
 </div>
 
-<script src="script.js?v=4"></script>
+<script src="script.js?v=5"></script>
 </body>
 </html>

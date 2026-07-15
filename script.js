@@ -9,14 +9,19 @@
 
   document.documentElement.classList.add('has-js');
 
-  // Hero background video: desktop 720p vem do <source> no HTML; troca p/ 360p leve no mobile
+  // Hero background video: desktop 720p (HTML <source>); troca p/ versão leve iOS-safe no mobile
   (function () {
     var hv = document.getElementById('heroVideo');
     if (!hv) return;
+    hv.muted = true; hv.setAttribute('muted', ''); // exigido p/ autoplay (iOS)
     if (window.matchMedia('(max-width: 768px)').matches) {
       var m = hv.getAttribute('data-mobile'), s = hv.querySelector('source');
       if (s && m) { s.setAttribute('src', m); hv.load(); }
     }
+    var tryPlay = function () { var p = hv.play(); if (p && p.catch) p.catch(function () {}); };
+    tryPlay();
+    hv.addEventListener('loadeddata', tryPlay, { once: true });
+    hv.addEventListener('canplay', tryPlay, { once: true });
   })();
 
   function waUrl(msg) { return 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(msg || DEFAULT_MSG); }
