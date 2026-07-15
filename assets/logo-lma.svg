@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" role="img" aria-label="LMA Club de Negócios">
+  <defs>
+    <linearGradient id="silver" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.5" stop-color="#e9edf5"/>
+      <stop offset="1" stop-color="#b9c2d4"/>
+    </linearGradient>
+    <filter id="emboss" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1.2" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <g fill="none" stroke="url(#silver)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#emboss)">
+    <!-- Cloud outline -->
+    <path d="M92 196
+             C60 196 40 176 42 150
+             C24 146 22 118 44 110
+             C40 78 70 58 100 70
+             C112 40 158 34 178 60
+             C196 40 234 44 244 70
+             C276 58 306 82 300 112
+             C324 118 324 150 300 156
+             C304 182 282 200 254 194
+             L92 196 Z"/>
+    <!-- Dove body -->
+    <path d="M150 150
+             C160 138 176 132 196 134
+             C216 136 236 130 250 116
+             C246 132 232 146 214 152
+             C232 150 250 142 262 128
+             C258 148 240 164 216 168
+             C200 170 182 168 168 160
+             C160 156 154 154 150 150 Z"/>
+    <!-- Dove upper wing -->
+    <path d="M150 150
+             C138 132 132 108 140 88
+             C150 104 158 122 162 140"/>
+    <path d="M150 150 C142 138 138 120 144 104"/>
+    <!-- Dove head detail -->
+    <path d="M250 116 C258 112 266 114 270 120"/>
+  </g>
+  <!-- Wordmark -->
+  <text x="200" y="238" text-anchor="middle"
+        font-family="Poppins, 'Segoe UI', sans-serif" font-size="30" font-weight="300"
+        letter-spacing="4" fill="url(#silver)" filter="url(#emboss)">LMA</text>
+  <text x="200" y="256" text-anchor="middle"
+        font-family="Poppins, 'Segoe UI', sans-serif" font-size="10.5" font-weight="400"
+        letter-spacing="5.5" fill="#c3cbda">CLUB DE NEGÓCIOS</text>
+</svg>
