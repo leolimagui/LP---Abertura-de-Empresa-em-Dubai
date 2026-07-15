@@ -9,6 +9,19 @@
 
   document.documentElement.classList.add('has-js');
 
+  // Hero background video: 720p on desktop, lighter 360p on mobile (saves data on ads/mobile)
+  (function () {
+    var hv = document.getElementById('heroVideo');
+    if (!hv) return;
+    var isMobile = window.matchMedia('(max-width: 768px)').matches;
+    var src = hv.getAttribute(isMobile ? 'data-mobile' : 'data-desktop');
+    if (!src) return;
+    var s = document.createElement('source');
+    s.type = 'video/mp4'; s.src = src;
+    hv.appendChild(s);
+    hv.load();
+  })();
+
   function waUrl(msg) { return 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(msg || DEFAULT_MSG); }
   function bindWa(el) {
     el.setAttribute('href', waUrl(el.getAttribute('data-msg')));
